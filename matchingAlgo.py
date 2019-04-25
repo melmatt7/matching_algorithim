@@ -16,6 +16,7 @@ def matching():
 
 	for f in range(0,len(mentor_info)):
 		for g in range(0,len(mentor_info[f])):
+			selection = get_match(mentor_info[f])
 			result1.write('%s ' % mentor_info[f][g])
 		result1.write('\n')
 
@@ -47,5 +48,12 @@ def parse_val(file):
 		info.append(file_val)
 
 	return info
+
+
+def get_match(mentor_pref):
+	mentor_id = mentor_pref[0]
+	
+	mentor_size = mentor_pref[1]
+
 
 matching()
