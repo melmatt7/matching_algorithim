@@ -1,59 +1,94 @@
-import numpy
+from openpyxl import load_workbook
+
+invalid_mentee = []
+
+# restrictions need to be tweaked
+MAX_MENTEE_ID = 748000
+MIN_MENTEE_ID = 747000
+
+MAX_MENTOR_ID = 150
+MIN_MENTOR_ID = 0
+
 
 def matching():
-	mentee=open('mentee.txt','r')
-	mentor=open('mentor.txt','r')
-	result=open('result.txt', 'w')
-	result1=open('result1.txt', 'w')
+	mentor_book = load_workbook("2018-2019 REX_ Applicant Ranking.xlsx")
+	mentee_book = load_workbook("2018 - 2019 REX Mentee Application.xlsx")
 
-	mentor_info = parse_val(mentor)
-	mentee_info = parse_val(mentee)
+	mentee = mentee_book.active
+	mentor = mentor_book.active
 
-	for m in range(0,len(mentee_info)):
-		for n in range(0,len(mentee_info[m])):
-			result.write('%s ' % mentee_info[m][n])
-		result.write('\n')
+	mentee_info = parse_mentee(mentee)
 
-	for f in range(0,len(mentor_info)):
-		for g in range(0,len(mentor_info[f])):
-			selection = get_match(mentor_info[f])
-			result1.write('%s ' % mentor_info[f][g])
-		result1.write('\n')
+	print(mentee_info)
+	print(invalid_mentee)
 
-def parse_val(file): 
-	id = ''
-	choices = ''
-	info = []
+def parse_mentee(mentee):
 
-	for line in file:
+	mentee_number = []
+	mentee_first_choice = []
+	mentee_second_choice = []
+	mentee_third_choice = []
+	mentee_fourth_choice = []
+	mentee_fifth_choice = []
+	mentee_info = []
+	i = 2
 
-		file_val=[]
-		i=0
-		while line[i] != '\t':
-			id += line[i]
+	while mentee.cell(row=i, column=6).value != None: 
+		mentee_number.append(mentee.cell(row=i, column=6).value) # column 6 is F (URO Number)
+		mentee_number[i-2], flag = checkValid(mentee_number[i-2], MAX_MENTEE_ID, MIN_MENTEE_ID)
+		if flag: 
+			invalid_mentee.append(mentee_number[i-2])
 			i += 1
-		file_val.append(id)
-		id = ''
+			continue
 
-		while line[i] != '\n':
-			if line[i] == '\t':
-				i += 1
-			else:
-				while line[i] != '\t' and line[i] != '\n':
-					choices += line[i]
-					i += 1
-				file_val.append(choices)
-				choices = ''		
+		mentee_first_choice.append(mentee.cell(row=i, column=15).value) # column 15 is O (First Choice)
+		mentee_first_choice[i-2], flag = checkValid(mentee_first_choice[i-2], MAX_MENTOR_ID, MIN_MENTOR_ID)
+		if flag: 
+			invalid_mentee.append(mentee_number[i-2])
+			i += 1
+			continue
 
-		info.append(file_val)
+		mentee_second_choice.append(mentee.cell(row=i, column=18).value) # column 18 is R (Second Choice)
+		mentee_second_choice[i-2], flag = checkValid(mentee_second_choice[i-2], MAX_MENTOR_ID, MIN_MENTOR_ID)
+		if flag: 
+			invalid_mentee.append(mentee_number[i-2])
+			i += 1
+			continue
 
-	return info
+		mentee_third_choice.append(mentee.cell(row=i, column=21).value) # column 21 is U (Third Choice)
+		mentee_third_choice[i-2], flag = checkValid(mentee_third_choice[i-2], MAX_MENTOR_ID, MIN_MENTOR_ID)
+		if flag: 
+			invalid_mentee.append(mentee_number[i-2])
+			i += 1
+			continue
 
+		mentee_fourth_choice.append(mentee.cell(row=i, column=24).value) # column 24 is X (Fourth Choice)
+		mentee_fourth_choice[i-2], flag = checkValid(mentee_fourth_choice[i-2], MAX_MENTOR_ID, MIN_MENTOR_ID)
+		if flag: 
+			invalid_mentee.append(mentee_number[i-2])
+			i += 1
+			continue
 
-def get_match(mentor_pref):
-	mentor_id = mentor_pref[0]
-	
-	mentor_size = mentor_pref[1]
+		mentee_fifth_choice.append(mentee.cell(row=i, column=27).value) # column 27 is AA (Fifth Choice)
+		mentee_fifth_choice[i-2], flag = checkValid(mentee_fifth_choice[i-2], MAX_MENTOR_ID, MIN_MENTOR_ID)
+		if flag: 
+			invalid_mentee.append(mentee_number[i-2])
+			i += 1
+			continue
 
+		# mentee_info[i-1].appned(mentee_number[i-1], mentee_first_choice[i-1], mentee_second_choice[i-1], mentee_third_choice[i-1], mentee_fourth_choice[i-1], mentee_fifth_choice[i-1])
+		mentee_info.append(mentee_number[i-2])
+
+		i += 1
+
+	return mentee_info
+
+def checkValid(value, max, min):
+	if type(value) == float and value >= min and value <= max: 
+		return int(value), False
+	else:
+		if type(value) == float:
+			return int(value), True
+		return value, True
 
 matching()
