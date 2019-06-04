@@ -30,6 +30,8 @@ def matching():
 	mentee_info = parse_mentee(mentee)
 	mentor_info = parse_mentor(mentor)
 
+	get_score(mentee_info, mentor_info)
+
 	print(mentor_info)
 	print(mentor_invalid_mentee_id)
 	print(mentor_invalid_mentor_id)
@@ -187,5 +189,9 @@ def checkValid(value, max, min):
 		if type(value) == float:
 			return int(value), True
 		return value, True
+
+
+def get_score(mentee, mentor):
+
 
 matching()
