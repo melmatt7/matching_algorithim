@@ -249,8 +249,6 @@ def _make_players(mentee_prefs, mentor_prefs, capacities):
         mentee_prefs, mentor_prefs, capacities
     )
 
-    print(mentor_prefs)
-
     for mentee_name, mentee in mentee_dict.items():
         prefs = [mentor_dict[name] for name in mentee_prefs[mentee_name]]
         mentee.set_prefs(prefs)

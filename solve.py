@@ -1,3 +1,5 @@
+import xlsxwriter
+
 from matching import MentorMentee
 
 import csv
@@ -16,8 +18,6 @@ for row in readertee:
 
     menteeDict.update({row[0]:val})
 
-print(menteeDict)
-
 tor = open('Mentor.csv', mode='r', encoding='utf-8-sig')
 
 readertor = csv.reader(tor)
@@ -32,8 +32,6 @@ for row in readertor:
 
     mentorDict.update({row[0]:val})
 
-print(mentorDict)
-
 cap = open('Mentor.csv', mode='r', encoding='utf-8-sig')
 
 readercap = csv.reader(cap)
@@ -42,8 +40,6 @@ capDict = {}
 
 for row in readercap:
     capDict.update({row[0]:int(row[1])})
-
-print(capDict)
 
 
 # mentee_prefs = {
