@@ -35,7 +35,7 @@ class MentorMentee:
 
         return game
 
-    def solve(self, optimal="mentee"):
+    def solve(self, optimal="mentor"):
         self._matching = Matching(
             mentor_mentee(self.mentees, self.mentors, optimal)
         )
@@ -151,9 +151,9 @@ class MentorMentee:
                     )
                 )
 
-        if errors:
-            raise Exception(*errors)
-
+            if errors:
+                raise Exception(*errors)
+                
         return True
 
 
@@ -249,15 +249,25 @@ def _make_players(mentee_prefs, mentor_prefs, capacities):
         mentee_prefs, mentor_prefs, capacities
     )
 
+    print(mentor_prefs)
+
     for mentee_name, mentee in mentee_dict.items():
         prefs = [mentor_dict[name] for name in mentee_prefs[mentee_name]]
         mentee.set_prefs(prefs)
 
+    mentees = list(mentee_dict.values())
+
     for mentor_name, mentor in mentor_dict.items():
         prefs = [mentee_dict[name] for name in mentor_prefs[mentor_name]]
+        mentees_that_ranked = [res for res in mentees if mentor in res.prefs]
+        unranked_mentees = list(set(mentees_that_ranked) - set(prefs))
+        prefs = prefs + unranked_mentees
+        random_mentees = list(set(prefs)-set(mentees_that_ranked))
+        prefs = [x for x in prefs if x not in random_mentees]
+
         mentor.set_prefs(prefs)
 
-    mentees = list(mentee_dict.values())
+    
     mentors = list(mentor_dict.values())
 
     return mentees, mentors

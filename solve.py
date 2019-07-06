@@ -10,7 +10,7 @@ menteeDict = {}
 
 for row in readertee:
     val = []
-    for i in range(1,5):
+    for i in range(1,6):
         if row[i]:
             val.append(row[i])
 
@@ -26,7 +26,7 @@ mentorDict = {}
 
 for row in readertor:
     val = []
-    for i in range(2,20):
+    for i in range(2,22):
         if row[i]:
             val.append(row[i])
 
@@ -41,7 +41,7 @@ readercap = csv.reader(cap)
 capDict = {}
 
 for row in readercap:
-    capDict.update({row[0]:row[1]})
+    capDict.update({row[0]:int(row[1])})
 
 print(capDict)
 
@@ -65,6 +65,8 @@ print(capDict)
 # }
 
 # game = MentorMentee.create_from_dictionaries(mentee_prefs, mentor_prefs, capacities)
+
+# missing numbers: 4,17,54,57
 
 game = MentorMentee.create_from_dictionaries(menteeDict, mentorDict, capDict)
 
