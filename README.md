@@ -4,6 +4,11 @@ A python implementation of the Gale-Shapley algorithm to determine the best comb
 
 ## How it Works
 
+.. image:: .\img\inputs_outputs.png
+   :align: center
+   :width: 10cm
+   
+ 
 ## Usage
 
 ## Future
