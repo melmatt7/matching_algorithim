@@ -1,4 +1,19 @@
+# Class to represent the Mentee
+
 class Mentee:
+    """
+    Parameters:
+        name : `object`
+            The mentee id
+    Attributes:
+        prefs : `list`
+            A list of `Mentee` instances in order of the Mentee's preferences.
+            Defaults to `None` and is updated using the `set_prefs` method.
+        pref_names : `list`
+            A list of the Mentor ids in `prefs`. Updates with `prefs`.
+        matching : `Mentee` or `None`
+            The current match of the mentee. `None` if not currently matched.
+    """
     def __init__(self, name):
 
         self.name = name
