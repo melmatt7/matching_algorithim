@@ -35,9 +35,9 @@ class MentorMentee:
 
         return game
 
-    def solve(self, optimal="mentor"):
+    def solve(self):
         self._matching = Matching(
-            mentor_mentee(self.mentees, self.mentors, optimal)
+            mentor_mentee(self.mentees, self.mentors, "mentor")
         )
         return self.matching
 
@@ -178,7 +178,7 @@ def unmatch_pair(mentee, mentor):
     mentor.unmatch(mentee)
 
 
-def mentor_mentee(mentees, mentors, optimal="mentee"):
+def mentor_mentee(mentees, mentors, optimal):
     if optimal == "mentee":
         return mentee_optimal(mentees, mentors)
     if optimal == "mentor":
@@ -264,8 +264,7 @@ def _make_players(mentee_prefs, mentor_prefs, capacities):
         prefs = [x for x in prefs if x not in random_mentees]
 
         mentor.set_prefs(prefs)
-
-    
+ 
     mentors = list(mentor_dict.values())
 
     return mentees, mentors

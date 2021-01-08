@@ -1,7 +1,3 @@
-#import xlsxwriter
-
-from matching import MentorMentee
-
 import csv
 
 tee = open('Mentee.csv', mode='r', encoding='utf-8-sig')
@@ -9,6 +5,7 @@ tee = open('Mentee.csv', mode='r', encoding='utf-8-sig')
 readertee = csv.reader(tee)
 
 menteeDict = {}
+menteeArray = []
 
 for row in readertee:
     val = []
@@ -17,6 +14,7 @@ for row in readertee:
             val.append(row[i])
 
     menteeDict.update({row[0]:val})
+    menteeArray.append(row)
 
 tor = open('Mentor.csv', mode='r', encoding='utf-8-sig')
 
@@ -41,29 +39,3 @@ capDict = {}
 for row in readercap:
     capDict.update({row[0]:int(row[1])})
 
-
-# mentee_prefs = {
-#     "747033": ["88","87","60"],
-#     "747021": ["88", "87", "60"],
-#     "747457": ["88", "60", "87"],
-# }
-
-# mentor_prefs = {
-#    "88": ["747033", "747021", "747457"],
-#    "87": ["747033", "747021", "747457"],
-#    "60": ["747033", "747457", "747021"]
-# }
-
-# capacities = {
-#     "88": 2,
-#     "87": 3,
-#     "60": 1
-# }
-
-# game = MentorMentee.create_from_dictionaries(mentee_prefs, mentor_prefs, capacities)
-
-# missing numbers: 4,17,54,57
-
-game = MentorMentee.create_from_dictionaries(menteeDict, mentorDict, capDict)
-
-print(game.solve())
