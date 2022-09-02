@@ -44,6 +44,7 @@ class Mentee:
         self.prefs = prefs
 
     def get_successors(self):
+        # print(self.matching)
         idx = self.prefs.index(self.matching)
         return self.prefs[idx + 1 :]
 
