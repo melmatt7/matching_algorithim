@@ -7,7 +7,7 @@ A python implementation of the Gale-Shapley algorithm to determine the best comb
 Usage
 ########
 
-.. image:: docs/img/inputs_outputs.png.jpg
+.. image:: docs/img/inputs_outputs.png
     :width: 200px
     :align: center
     :height: 100px
