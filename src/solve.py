@@ -7,19 +7,19 @@ mentor_file = 'files/selections/Mentor_2021.csv'
 
 menteeDict, mentorDict, capDict = extract_dict(mentee_file, mentor_file)
 
-# mentee_prefs = {
+# menteeDict = {
 #     "747033": ["88","87","60"],
 #     "747021": ["88", "87", "60"],
 #     "747457": ["88", "60", "87"],
 # }
 
-# mentor_prefs = {
+# mentorDict = {
 #    "88": ["747033", "747021", "747457"],
 #    "87": ["747033", "747021", "747457"],
 #    "60": ["747033", "747457", "747021"]
 # }
 
-# capacities = {
+# capDict = {
 #     "88": 2,
 #     "87": 3,
 #     "60": 1
