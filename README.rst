@@ -8,6 +8,10 @@ Usage
 ########
 
 .. image:: docs/img/inputs_outputs.png.jpg
+    :width: 200px
+    :align: center
+    :height: 100px
+    :alt: schematic
 
 Mentee and mentor preferences as well as mentor capacities are inputed as dictionaries in the solve.py file. Running this file will output a results dictionary with the mentor/mentee matching. 
 
