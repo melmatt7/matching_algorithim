@@ -11,7 +11,7 @@ Usage
     :align: center
     :alt: schematic
 
-Mentee and mentor preferences as well as mentor capacities are inputed as dictionaries in the solve.py file. Running this file will output a results dictionary with the mentor/mentee matching. 
+Mentee and mentor preferences as well as mentor capacities are provided in respective csv files. Program outputs a csv file with computed matchings. 
 
 Future
 ########
