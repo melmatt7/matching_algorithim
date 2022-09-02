@@ -6,7 +6,8 @@ A python implementation of the Gale-Shapley algorithm to determine the best comb
 
 Usage
 ########
-![how it works](docs/img/inputs_outputs.png)  
+
+.. image:: docs/img/inputs_outputs.png.jpg
 
 Mentee and mentor preferences as well as mentor capacities are inputed as dictionaries in the solve.py file. Running this file will output a results dictionary with the mentor/mentee matching. 
 
