@@ -1,6 +1,10 @@
+from .matching import MentorMentee
+from .csv_utils import extract_dict
+from .csv_utils import write_results
+
 import os
 
-from flask import Flask, request, render_template, send_from_directory, Response
+from flask import Flask, request, render_template, send_from_directory, send_file
 
 app = Flask(__name__)
 
@@ -24,29 +28,44 @@ def upload():
     if not os.path.isdir(target):
         os.mkdir(target)
     print(request.files.getlist("file"))
-    for upload in request.files.getlist("file"):
-        print(upload)
-        print("{} is the file name".format(upload.filename))
-        filename = upload.filename
-        # This is to verify files are supported
-        ext = os.path.splitext(filename)[1]
-        if (ext == ".csv"):
-            print("File supported moving on...")
-        else:
-            render_template("Error.html", message="Files uploaded are not supported...")
-        destination = "/".join([target, filename])
-        print("Accept incoming file:", filename)
-        print("Save it to:", destination)
-        upload.save(destination)
 
-    # with open("outputs/Adjacency.csv") as fp:
-    #     csv = fp.read()
-    csv = '1,2,3\n4,5,6\n'
-    return Response(
-        csv,
-        mimetype="text/csv",
-        headers={"Content-disposition":
-                 "attachment; filename=myplot.csv"})
+    mentee_file = request.files.getlist("file")[0]
+    print(mentee_file)
+    print("{} is the file name".format(mentee_file.filename))
+    filename = mentee_file.filename
+    # This is to verify files are supported
+    ext = os.path.splitext(filename)[1]
+    if (ext == ".csv"):
+        print("File supported moving on...")
+    else:
+        render_template("Error.html", message="Files uploaded are not supported...")
+    mentee_destination = "/".join([target, filename])
+    print("Accept incoming file:", filename)
+    print("Save it to:", mentee_destination)
+    mentee_file.save(mentee_destination)
+
+    mentor_file = request.files.getlist("file")[1]
+    print(mentor_file)
+    print("{} is the file name".format(mentor_file.filename))
+    filename = mentor_file.filename
+    # This is to verify files are supported
+    ext = os.path.splitext(filename)[1]
+    if (ext == ".csv"):
+        print("File supported moving on...")
+    else:
+        render_template("Error.html", message="Files uploaded are not supported...")
+    mentor_destination = "/".join([target, filename])
+    print("Accept incoming file:", filename)
+    print("Save it to:", mentor_destination)
+    mentor_file.save(mentor_destination)
+
+    menteeDict, mentorDict, capDict = extract_dict(mentee_destination, mentor_destination)
+    game = MentorMentee.create_from_dictionaries(menteeDict, mentorDict, capDict)
+    res_data = game.solve()
+    write_results(res_data, "result_test")
+
+    csv_path = "files/result_test.csv"
+    return send_file(csv_path, as_attachment=True, attachment_filename="matching_results.csv")
 
 
 @app.route('/upload/<filename>')
