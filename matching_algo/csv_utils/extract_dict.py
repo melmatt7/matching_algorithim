@@ -11,7 +11,7 @@ def extract_dict(mentee_file, mentor_file):
 
     for row in readertee:
         val = []
-        for i in range(1,6):
+        for i in range(1,len(row)):
             if row[i]:
                 val.append(row[i])
 
@@ -28,7 +28,7 @@ def extract_dict(mentee_file, mentor_file):
     for row in readertor:
         val = []
         capDict.update({row[0]:int(row[1])})
-        for i in range(2,22):
+        for i in range(2,len(row)):
             if row[i]:
                 val.append(row[i])
 

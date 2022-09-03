@@ -1,4 +1,4 @@
-from matching import Matching
+from .matching import Matching
 from .people import Mentee
 from .people import Mentor
 
@@ -37,7 +37,7 @@ class MentorMentee:
 
     def solve(self):
         self._matching = Matching(
-            mentor_mentee(self.mentees, self.mentors, "mentor")
+            mentor_mentee(self.mentors)
         )
         return self.matching
 
@@ -178,38 +178,7 @@ def unmatch_pair(mentee, mentor):
     mentor.unmatch(mentee)
 
 
-def mentor_mentee(mentees, mentors, optimal):
-    if optimal == "mentee":
-        return mentee_optimal(mentees, mentors)
-    if optimal == "mentor":
-        return mentor_optimal(mentors)
-
-
-def mentee_optimal(mentees, mentors):
-    free_mentees = mentees[:]
-    while free_mentees:
-
-        mentee = free_mentees.pop()
-        mentor = mentee.get_favourite()
-
-        match_pair(mentee, mentor)
-
-        if len(mentor.matching) > mentor.capacity:
-            worst = mentor.get_worst_match()
-            unmatch_pair(worst, mentor)
-            free_mentees.append(worst)
-
-        if len(mentor.matching) == mentor.capacity:
-            successors = mentor.get_successors()
-            for successor in successors:
-                delete_pair(mentor, successor)
-                if not successor.prefs:
-                    free_mentees.remove(successor)
-
-    return {r: r.matching for r in mentors}
-
-
-def mentor_optimal(mentors):
+def mentor_mentee(mentors):
     free_mentors = mentors[:]
     while free_mentors:
 
