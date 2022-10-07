@@ -4,9 +4,12 @@ from .csv_utils import write_results
 
 import os
 
-from flask import Flask, request, render_template, send_from_directory, send_file
+from flask import Flask, request, render_template, send_file
+from flask.ext.scss import Scss
 
 app = Flask(__name__)
+
+Scss(app)
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
@@ -66,19 +69,6 @@ def upload():
 
     csv_path = "files/result_test.csv"
     return send_file(csv_path, as_attachment=True, attachment_filename="matching_results.csv")
-
-
-@app.route('/upload/<filename>')
-def send_image(filename):
-    return send_from_directory("images", filename)
-
-
-@app.route('/gallery')
-def get_gallery():
-    image_names = os.listdir('./images')
-    print(image_names)
-    return render_template("gallery.html", image_names=image_names)
-
 
 if __name__ == "__main__":
     app.run(port=4555, debug=True)
