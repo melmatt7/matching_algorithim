@@ -1,4 +1,5 @@
 # Class to represent the Mentee
+from logging import warning
 
 class Mentee:
     """
@@ -40,12 +41,19 @@ class Mentee:
 
     def forget(self, other):
         prefs = self.prefs[:]
-        prefs.remove(other)
+        try:
+            prefs.remove(other)
+        except ValueError:
+            raise ValueError(f"Mentee {other} has put mentor {self.name} multiple times in their preferences, remove redundant preferences before continuing")
+
         self.prefs = prefs
 
     def get_successors(self):
-        # print(self.matching)
-        idx = self.prefs.index(self.matching)
+        try:
+            idx = self.prefs.index(self.matching)
+        except ValueError:
+            raise ValueError(f"Mentor {self.matching} has put mentee {self.name} multiple times in their preferences, remove redundant preferences before continuing") from None
+        
         return self.prefs[idx + 1 :]
 
     def prefers(self, mentee, other):

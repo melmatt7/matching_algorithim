@@ -2,6 +2,7 @@ from .matching import Matching
 from .people import Mentee
 from .people import Mentor
 
+from logging import warning
 
 class MentorMentee:
 
@@ -185,7 +186,10 @@ def mentor_mentee(mentors):
         mentor = free_mentors.pop()
         mentee = mentor.get_favourite()
 
-        if mentee.matching:
+        if mentee is None:
+            warning(f"Mentor {mentor} has no matches due to selecting only non-existent mentees")
+            continue
+        elif mentee.matching:
             curr_match = mentee.matching
             unmatch_pair(mentee, curr_match)
             if curr_match not in free_mentors:
@@ -219,13 +223,27 @@ def _make_players(mentee_prefs, mentor_prefs, capacities):
     )
 
     for mentee_name, mentee in mentee_dict.items():
-        prefs = [mentor_dict[name] for name in mentee_prefs[mentee_name]]
+        prefs = []
+
+        for name in mentee_prefs[mentee_name]: 
+            if name in mentor_dict.keys():
+                prefs.append(mentor_dict[name])
+            else:
+                warning(f"mentor id {name} not in mentor list, skipping preference value")
+
         mentee.set_prefs(prefs)
 
     mentees = list(mentee_dict.values())
 
     for mentor_name, mentor in mentor_dict.items():
-        prefs = [mentee_dict[name] for name in mentor_prefs[mentor_name]]
+        prefs = []
+
+        for name in mentor_prefs[mentor_name]:
+            if name in mentee_dict.keys():
+                prefs.append(mentee_dict[name])
+            else:
+                warning(f"mentee id {name} not in mentee list, skipping preference value")
+
         mentees_that_ranked = [res for res in mentees if mentor in res.prefs]
         unranked_mentees = list(set(mentees_that_ranked) - set(prefs))
         prefs = prefs + unranked_mentees
