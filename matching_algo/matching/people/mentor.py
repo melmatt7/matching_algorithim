@@ -17,7 +17,9 @@ class Mentor(Mentee):
 
     def match(self, mentee):
         self.matching.append(mentee)
+        #TODO: error here means a mentee put a mentor on their prefs multiple times
         self.matching.sort(key=self.prefs.index)
+            
 
     def unmatch(self, mentee):
         matching = self.matching[:]

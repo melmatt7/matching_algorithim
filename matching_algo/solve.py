@@ -1,9 +1,10 @@
 from matching import MentorMentee
 from csv_utils import extract_dict
 from csv_utils import write_results
+import numpy as np
 
-mentee_file = 'files/selections/mentee_2021_1.csv'
-mentor_file = 'files/selections/mentor_2021_1.csv'
+mentee_file = 'files/selections/mentee_2023.csv'
+mentor_file = 'files/selections/mentor_2023.csv'
 
 menteeDict, mentorDict, capDict = extract_dict(mentee_file, mentor_file)
 
@@ -28,7 +29,9 @@ menteeDict, mentorDict, capDict = extract_dict(mentee_file, mentor_file)
 # game = MentorMentee.create_from_dictionaries(mentee_prefs, mentor_prefs, capacities)
 
 game = MentorMentee.create_from_dictionaries(menteeDict, mentorDict, capDict)
+print(sum(capDict.values()))
+print(206/244)
 
 res_data = game.solve()
 
-write_results(res_data, "result_test_1")
+write_results(res_data, "result_2023")
